@@ -1,0 +1,30 @@
+/*
+    Basic element settings, should only contain settings that affect the whole page
+*/
+
+html {
+    font-size: 62.5%;
+
+    * {
+        .border-box();
+        font-family: 'Roboto', sans-serif;
+        outline: none;
+    }
+}
+
+body {
+    font-size: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    counter-reset: ol;
+
+    & > h1 {
+        position: absolute;
+        left: -10000px;
+    }
+}
+
+a {
+    color: @black;
+    text-decoration: none;
+}

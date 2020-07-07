@@ -1,0 +1,60 @@
+/*
+    Main styles
+*/
+
+body {
+    background-color: #2f2f2f;
+    position: relative;
+}
+
+canvas {
+    .round(16px);
+    display: block;
+    position: absolute;
+    left: calc(50% - 480px);
+    top: 200px;
+    margin: auto;
+    background-color: @white;
+    box-shadow: 0 16px 32px rgba(12,12,12,.5);
+    //transform: translate(-50% -50%);
+}
+
+.tools {
+    .round(4px);
+    overflow: hidden;
+    display: flex;
+    position: absolute;
+    list-style: none;
+    top: 125px;
+    left: calc(50% - 480px);
+
+    li {
+        display: flex;
+
+        button,
+        a {
+            height: 32px;
+            background-color: @white;
+
+            &:hover {
+                background-color: darken(@white, 5%);
+            }
+        }
+
+        label {
+            font-size: 1.2rem;
+            background-color: @white;
+            color: rgba(22,22,22,.7);
+        }
+
+        button,
+        label,
+        a,
+        input {
+            display: block;
+            height: 48px;
+            line-height: 48px;
+            padding: 0 12px;
+        }
+    }
+}
