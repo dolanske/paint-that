@@ -1,17 +1,18 @@
 // Global variables
 let brushSize = 10;
-let brushColor;
+let brushColor = "#000000";
 let globalDecrement = 5;
 let globalIncrement = 5;
 let maxBrushSize = 500;
-let fps = 300;
+let fps = 500;
 let update;
 let event;
 
 jQuery(document).ready(function($) {
     // Get the canvas elements
     let canvas = $("#canvas")[0];
-    let ctx = canvas.getContext('2d');
+    let context = canvas.getContext('2d');
+    let bsi = $("#bsi"); // Brush size indicator
 
     let inputSize = $("#size");
 
@@ -22,7 +23,7 @@ jQuery(document).ready(function($) {
             let x = m.x - (brushSize / 2);
             let y = m.y - (brushSize / 2);
 
-            draw(x, y, brushSize, ctx);
+            draw(x, y, brushSize, context);
         }, 1000 / fps);
         return false;
     });
@@ -37,6 +38,11 @@ jQuery(document).ready(function($) {
     // Constantly fetch the mouse position
     $(document).mousemove((e) => {
         event = e;
+
+        bsi.css({
+            left: getMousePos(e, canvas).x - (brushSize / 2),
+            top: getMousePos(e, canvas).y - (brushSize / 2),
+        })
     });
 
     // Change brush size on mouse scroll up / down
@@ -55,10 +61,28 @@ jQuery(document).ready(function($) {
 
     // Update brush size on input change
     $("#size").on("change keyup", (e) => {
-        let newSize = $("#size").val();
-        $("#size").val(newSize);
+        let newSize = $("#size").val()
+        $("#size").val(newSize)
 
-        setBrushSize(newSize);
+        setBrushSize(newSize)
+    })
+
+    // Resets canvas
+    $("#clear").click((e) => {
+        e.preventDefault()
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    })
+
+    $("#eraser").click(function(e) {
+        e.preventDefault()
+        $(this).toggleClass("active")
+
+        if ($(this).hasClass("active")) {
+            setBrushColor("#fff");
+        } else {
+            setBrushColor("#000");
+        }
     })
 });
 
@@ -70,39 +94,49 @@ function getMousePos(e, element) {
 }
 
 function draw(x, y, diameter, canvas) {
+    canvas.fillStyle = brushColor
     canvas.fillRect(x, y, diameter, diameter);
+    //canvas.arc(x, y, diameter, 0, 2 * Math.PI);
+    //canvas.stroke();
 }
 
 function brushSizeIncrement(increment) {
     if (brushSize > maxBrushSize - increment) {
-        brushSize = maxBrushSize
+        setBrushSize(maxBrushSize)
     } else {
-        brushSize += increment;
+        setBrushSize(brushSize + increment)
     }
-
-    e("Updated brush size: " + brushSize + "px");
 }
 
 function brushSizeDecrement(decrement) {
     if (brushSize > decrement + decrement) {
-        brushSize -= decrement;
+        setBrushSize(brushSize - decrement)
     } else {
-        brushSize = 1;
+        setBrushSize(1);
     }
-
-    e("Updated brush size: " + brushSize + "px");
 }
 
 function setBrushSize(size) {
-    let s = parseInt(size);
+    let s = parseInt(size)
 
     if (s > 0) {
-        brushSize = size;
+        brushSize = s
 
-        if (size > maxBrushSize) {
-            brushSize = maxBrushSize;
+        if (s > maxBrushSize) {
+            brushSize = maxBrushSize
         }
     }
 
-    e("Updated brush size: " + brushSize + "px");
+    $(bsi).css({
+        width: brushSize,
+        height: brushSize,
+        left: getMousePos(event, canvas).x - (brushSize / 2),
+        top: getMousePos(event, canvas).y - (brushSize / 2),
+    })
+
+    e("Updated brush size: " + brushSize + "px")
+}
+
+function setBrushColor(color) {
+    brushColor = color
 }

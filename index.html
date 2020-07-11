@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Painting | jandolansky</title>
+    <title>paint that | jandolansky</title>
     <link rel="stylesheet" href="less_data/css/index.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
@@ -15,7 +15,8 @@
 
 <body>
     <ul class="tools">
-        <li><a href="#" id="brush">Brush</a></li>
+        <!-- <li><a href="#" id="brush">Brush</a></li>
+        <li><a href="#" id="fill">Fill</a></li> -->
         <li><a href="#" id="eraser">Eraser</a></li>
         <li><a href="#" id="clear">Clear</a></li>
         <li><label for="size">Brush size: </label><input
@@ -23,11 +24,12 @@
             name="size"
             id="size"
             value="20"/>
-            <!-- <a href="#" id="updateSize">Update</a> -->
         </li>
-
     </ul>
-    <canvas id="canvas" width="960" height="640"></canvas>
+    <div class="canvas-wrapper">
+        <div id="bsi"></div>
+        <canvas id="canvas" width="960" height="640"></canvas>
+    </div>
 </body>
 
 </html>

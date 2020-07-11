@@ -1,22 +1,26 @@
 /*
     Main styles
 */
-
 body {
-    background-color: #2f2f2f;
+    background-color: @c5;
     position: relative;
 }
 
-canvas {
+.canvas-wrapper {
     .round(16px);
     display: block;
     position: absolute;
     left: calc(50% - 480px);
     top: 200px;
     margin: auto;
-    background-color: @white;
-    box-shadow: 0 16px 32px rgba(12,12,12,.5);
-    //transform: translate(-50% -50%);
+    width: 960px;
+    height: 640px;
+    overflow: hidden;
+
+    canvas {
+        background-color: @white;
+        box-shadow: 0 16px 32px @c5;
+    }
 }
 
 .tools {
@@ -31,30 +35,46 @@ canvas {
     li {
         display: flex;
 
-        button,
-        a {
+        a,
+        button {
+            .tc(.3s);
             height: 32px;
-            background-color: @white;
+            background-color: @c1;
+
+            &.active {
+                background-color: @white;
+                color: @c1;
+            }
 
             &:hover {
-                background-color: darken(@white, 5%);
+                background-color: darken(@c1, 5%);
             }
         }
 
         label {
             font-size: 1.2rem;
-            background-color: @white;
+            background-color: @c1;
             color: rgba(22,22,22,.7);
         }
 
-        button,
-        label,
         a,
-        input {
+        button,
+        input,
+        label {
             display: block;
             height: 48px;
             line-height: 48px;
             padding: 0 12px;
+            color: @c5;
+            background-color: @c1;
         }
     }
+}
+
+#bsi {
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    border: 1px solid rgb(255,255,255);
+    mix-blend-mode: difference;
 }

@@ -5,52 +5,8 @@
 @import "setup/mixins.less";
 
 // Style includes
-@import "master/fonts.less";
 @import "master/forms.less";
-@import "master/post-styles.less";
 @import "master/framework.less";
-@import "master/browsers.less";
 
 // Main styling
 @import "master/main.less";
-
-// Media queries
-@media screen and (min-width: 1921px) {
-    @import "respo/custom1920.less";
-}
-
-@media screen  and (max-width: 1550px) and (min-width: 0px) {
-    @import "respo/custom1178.less";
-
-    .container {
-        width: 1096px;
-    }
-}
-
-@media screen  and (max-width: 1300px) and (min-width: 0px) {
-    .container {
-        width: 948px;
-    }
-
-    @import "respo/custom0978.less";
-}
-
-@media screen  and (max-width: 1023px) and (min-width: 0px) {
-    .container {
-        width: 748px;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
-    @import "respo/custom0768.less";
-}
-
-@media screen  and (max-width: 767px) and (min-width: 0px) {
-    .container {
-        width: 100%;
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-
-    @import "respo/custom0300.less";
-}
