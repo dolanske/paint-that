@@ -1,19 +1,21 @@
 // Global variables
-let brushSize = 10;
-let brushColor = "#000000";
-let globalDecrement = 5;
-let globalIncrement = 5;
-let maxBrushSize = 500;
-let fps = 500;
-let update;
-let event;
+let brushSize = 10
+let color_r = 0
+let color_g = 0
+let color_b = 0
+let brushColor
+let globalDecrement = 5
+let globalIncrement = 5
+let maxBrushSize = 500
+let fps = 500
+let update
+let event
 
 jQuery(document).ready(function($) {
     // Get the canvas elements
     let canvas = $("#canvas")[0];
     let context = canvas.getContext('2d');
     let bsi = $("#bsi"); // Brush size indicator
-
     let inputSize = $("#size");
 
     // Start the drawing event on mouse DOWN
@@ -39,10 +41,7 @@ jQuery(document).ready(function($) {
     $(document).mousemove((e) => {
         event = e;
 
-        bsi.css({
-            left: getMousePos(e, canvas).x - (brushSize / 2),
-            top: getMousePos(e, canvas).y - (brushSize / 2),
-        })
+        updateBSI(brushSize)
     });
 
     // Change brush size on mouse scroll up / down
@@ -71,7 +70,7 @@ jQuery(document).ready(function($) {
     $("#clear").click((e) => {
         e.preventDefault()
 
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.clearRect(0, 0, canvas.width, canvas.height)
     })
 
     $("#eraser").click(function(e) {
@@ -79,11 +78,31 @@ jQuery(document).ready(function($) {
         $(this).toggleClass("active")
 
         if ($(this).hasClass("active")) {
-            setBrushColor("#fff");
+            setBrushColor("#fff")
         } else {
-            setBrushColor("#000");
+            setBrushColor("#000")
         }
     })
+
+    $("input[type=range]").on("input", function(e) {
+        let n = $(this).attr("id");
+        let v = $(this).val();
+
+        switch (n) {
+            case "color_r":
+                color_r = v
+                break;
+            case "color_g":
+                color_g = v
+                break;
+            case "color_b":
+                color_b = v
+                break;
+        }
+
+        setBrushColor(color_r, color_b, color_g);
+        $("#color_display").css({"background-color" : brushColor});
+    });
 });
 
 function getMousePos(e, element) {
@@ -96,8 +115,6 @@ function getMousePos(e, element) {
 function draw(x, y, diameter, canvas) {
     canvas.fillStyle = brushColor
     canvas.fillRect(x, y, diameter, diameter);
-    //canvas.arc(x, y, diameter, 0, 2 * Math.PI);
-    //canvas.stroke();
 }
 
 function brushSizeIncrement(increment) {
@@ -127,16 +144,20 @@ function setBrushSize(size) {
         }
     }
 
+    updateBSI(brushSize);
+
+    e("Updated brush size: " + brushSize + "px")
+}
+
+function updateBSI(brushSize) {
     $(bsi).css({
         width: brushSize,
         height: brushSize,
         left: getMousePos(event, canvas).x - (brushSize / 2),
         top: getMousePos(event, canvas).y - (brushSize / 2),
     })
-
-    e("Updated brush size: " + brushSize + "px")
 }
 
-function setBrushColor(color) {
-    brushColor = color
+function setBrushColor(r, g, b) {
+    brushColor = "rgb(" + r + "," + g + "," + b + ")"
 }

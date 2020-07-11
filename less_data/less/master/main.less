@@ -32,8 +32,16 @@ body {
     top: 125px;
     left: calc(50% - 480px);
 
+    &.right {
+        left: unset;
+        right: calc(50% - 480px);
+    }
+
     li {
         display: flex;
+        background-color: @c1;
+        height: 48px;
+        line-height: 48px;
 
         a,
         button {
@@ -51,6 +59,11 @@ body {
             }
         }
 
+        #color_display {
+            width: 48px;
+            background-color: @black;
+        }
+
         label {
             font-size: 1.2rem;
             background-color: @c1;
@@ -59,16 +72,54 @@ body {
 
         a,
         button,
-        input,
+        input[type=text],
         label {
             display: block;
             height: 48px;
             line-height: 48px;
             padding: 0 12px;
             color: @c5;
-            background-color: @c1;
         }
     }
+}
+
+label {
+    border-left: 1px solid @c4;
+}
+
+input {
+    color: @c5;
+    border: none;
+    width: 60px;
+    background-color: @c1;
+    border-right: 1px solid @c4;
+}
+
+input[type=range] {
+    .round(2px);
+    width: 150px;
+    height: 6px;
+    margin: 19px 8px;
+    vertical-align: middle;
+    background-color: @c5;
+    -webkit-appearance: none;
+    appearance: none;
+
+    ::-webkit-slider-thumb {
+        .round(50%);
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        background-color: @c2;
+        cursor: pointer;
+        border-color: @c2;
+    }
+}
+
+button {
+    border: none;
+    cursor: pointer;
 }
 
 #bsi {
