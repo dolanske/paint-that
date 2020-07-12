@@ -16,10 +16,10 @@ body {
     width: 960px;
     height: 640px;
     overflow: hidden;
+    box-shadow: 0 16px 32px rgba(0,0,0,.2);
 
     canvas {
         background-color: @white;
-        box-shadow: 0 16px 32px @c5;
     }
 }
 
@@ -29,8 +29,9 @@ body {
     display: flex;
     position: absolute;
     list-style: none;
-    top: 125px;
+    top: 115px;
     left: calc(50% - 480px);
+    box-shadow: 0 16px 32px rgba(0,0,0,.2);
 
     &.right {
         left: unset;
@@ -80,6 +81,15 @@ body {
             padding: 0 12px;
             color: @c5;
         }
+
+        label {
+            padding-right: 0;
+        }
+
+        input[type=text] {
+            padding-left: 4px;
+
+        }
     }
 }
 
@@ -90,16 +100,17 @@ label {
 input {
     color: @c5;
     border: none;
-    width: 60px;
+    width: 50px;
+    text-align: center;
     background-color: @c1;
     border-right: 1px solid @c4;
 }
 
 input[type=range] {
     .round(2px);
-    width: 150px;
+    width: 100px;
     height: 6px;
-    margin: 19px 8px;
+    margin: 22px 8px;
     vertical-align: middle;
     background-color: @c5;
     -webkit-appearance: none;

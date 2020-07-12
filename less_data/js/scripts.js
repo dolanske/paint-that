@@ -3,13 +3,11 @@ let brushSize = 10
 let color_r = 0
 let color_g = 0
 let color_b = 0
-let brushColor
 let globalDecrement = 5
 let globalIncrement = 5
 let maxBrushSize = 500
 let fps = 500
-let update
-let event
+let update, event, brushColor
 
 jQuery(document).ready(function($) {
     // Get the canvas elements
@@ -17,6 +15,7 @@ jQuery(document).ready(function($) {
     let context = canvas.getContext('2d');
     let bsi = $("#bsi"); // Brush size indicator
     let inputSize = $("#size");
+    let brush_slider = $("#brush_slider");
 
     // Start the drawing event on mouse DOWN
     $(canvas).mousedown((e) => {
@@ -64,8 +63,10 @@ jQuery(document).ready(function($) {
         $("#size").val(newSize)
 
         setBrushSize(newSize)
+        if (newSize > 0) {
+            brush_slider.val(newSize)
+        }
     })
-
     // Resets canvas
     $("#clear").click((e) => {
         e.preventDefault()
@@ -78,9 +79,9 @@ jQuery(document).ready(function($) {
         $(this).toggleClass("active")
 
         if ($(this).hasClass("active")) {
-            setBrushColor("#fff")
+            setBrushColor(255, 255, 255)
         } else {
-            setBrushColor("#000")
+            setBrushColor(0, 0, 0)
         }
     })
 
@@ -98,12 +99,18 @@ jQuery(document).ready(function($) {
             case "color_b":
                 color_b = v
                 break;
+            case "brush_slider":
+                setBrushSize(v)
+                $("#size").val(v)
+                break;
         }
 
         setBrushColor(color_r, color_b, color_g);
-        $("#color_display").css({"background-color" : brushColor});
-    });
-});
+        $("#color_display").css({
+            "background-color": brushColor
+        })
+    })
+})
 
 function getMousePos(e, element) {
     return {
@@ -129,7 +136,7 @@ function brushSizeDecrement(decrement) {
     if (brushSize > decrement + decrement) {
         setBrushSize(brushSize - decrement)
     } else {
-        setBrushSize(1);
+        setBrushSize(1)
     }
 }
 
@@ -144,9 +151,7 @@ function setBrushSize(size) {
         }
     }
 
-    updateBSI(brushSize);
-
-    e("Updated brush size: " + brushSize + "px")
+    updateBSI(brushSize)
 }
 
 function updateBSI(brushSize) {
@@ -160,4 +165,4 @@ function updateBSI(brushSize) {
 
 function setBrushColor(r, g, b) {
     brushColor = "rgb(" + r + "," + g + "," + b + ")"
-}
+} 
