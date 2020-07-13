@@ -1,8 +1,5 @@
 // Global variables
 let brushSize = 10
-let color_r = 0
-let color_g = 0
-let color_b = 0
 let globalDecrement = 5
 let globalIncrement = 5
 let maxBrushSize = 500
@@ -55,7 +52,7 @@ jQuery(document).ready(function($) {
         inputSize.val(brushSize);
 
         return false;
-    });
+    })
 
     // Update brush size on input change
     $("#size").on("change keyup", (e) => {
@@ -67,6 +64,7 @@ jQuery(document).ready(function($) {
             brush_slider.val(newSize)
         }
     })
+
     // Resets canvas
     $("#clear").click((e) => {
         e.preventDefault()
@@ -74,6 +72,7 @@ jQuery(document).ready(function($) {
         context.clearRect(0, 0, canvas.width, canvas.height)
     })
 
+    // For now only sets brush color to white
     $("#eraser").click(function(e) {
         e.preventDefault()
         $(this).toggleClass("active")
@@ -85,29 +84,35 @@ jQuery(document).ready(function($) {
         }
     })
 
+    // This is supposed to work with every slider in the program, might restructure later
     $("input[type=range]").on("input", function(e) {
-        let n = $(this).attr("id");
-        let v = $(this).val();
+        let n = $(this).attr("id")
+        let v = $(this).val()
 
         switch (n) {
-            case "color_r":
-                color_r = v
-                break;
-            case "color_g":
-                color_g = v
-                break;
-            case "color_b":
-                color_b = v
-                break;
             case "brush_slider":
                 setBrushSize(v)
                 $("#size").val(v)
+
                 break;
         }
+    })
 
-        setBrushColor(color_r, color_b, color_g);
-        $("#color_display").css({
-            "background-color": brushColor
+    // Switching tool lists
+    $(".tool-list.left a").click(function(e) {
+        e.preventDefault()
+
+        let t = $(".tool-lists-top").find("ul[data-for='" + $(this).attr("id") + "']")
+        $(t).addClass("active").siblings().removeClass("active")
+    })
+
+    // Set new color and color indicator
+    $("#color_input").on("input", function(e) {
+        let c = $(this).val()
+        setBrushColor(c)
+
+        $(this).next().css({
+            backgroundColor: c,
         })
     })
 })
@@ -163,6 +168,6 @@ function updateBSI(brushSize) {
     })
 }
 
-function setBrushColor(r, g, b) {
-    brushColor = "rgb(" + r + "," + g + "," + b + ")"
-} 
+function setBrushColor(color) {
+    brushColor = color
+}

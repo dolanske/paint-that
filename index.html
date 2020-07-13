@@ -15,26 +15,53 @@
 </head>
 
 <body>
-    <ul class="tools">
-        <li><a href="#" id="fill"><i class="fas fa-fill-drip"></i></a></li>
-        <li><a href="#" id="picker"><i class="fas fa-eye-dropper"></i></a></li>        
-        <li><a href="#" id="eraser"><i class="fas fa-eraser"></i></a></li>
-        <li><a href="#" id="clear"><i class="fas fa-times"></i></a></li>
-        <li><label for="size">Brush size: </label><input
-            type="text"
-            name="size"
-            id="size"
-            maxlength="3"
-            value="20" />
+    <input type="color" id="color_input" name="color_input">
+    <label for="color_input"></label>
+    <ul class="tool-list left">
+        <li>
+            <a href="#" id="brush"><i class="fas fa-paint-brush"></i></a>
+            <p class="tooltip">Brush</p>
         </li>
-        <li><input type="range" min="1" max="500" name="brush_slider" id="brush_slider" value="20" /></li>
+        <li>
+            <a href="#" id="picker"><i class="fas fa-eye-dropper"></i></a>
+            <p class="tooltip">Color picker</p>
+        </li>
+        <li>
+            <a href="#" id="fill"><i class="fas fa-fill-drip"></i></a>
+            <p class="tooltip">Fill tool</p>
+        </li>
+        <li>
+            <a href="#" id="eraser"><i class="fas fa-eraser"></i></a>
+            <p class="tooltip">Eraser</p>
+        </li>
+        <li>
+            <a href="#" id="clear"><i class="fas fa-times"></i></a>
+            <p class="tooltip">Clear canvas</p>
+        </li>
     </ul>
-    <ul class="tools right">
-        <li><label for="color_r">R: </label><input id="color_r" name="color_r" type="range" min="0" max="255" value="0" /></li>
-        <li><label for="color_g">G: </label><input id="color_g" name="color_g" type="range" min="0" max="255" value="0" /></li>
-        <li><label for="color_b">B: </label><input id="color_b" name="color_b" type="range" min="0" max="255" value="0" /></li>
-        <li><div id="color_display"></div></li>
-    </ul>
+    <div class="tool-lists-top">
+        <ul class="tool-list top active" data-for="brush">
+            <li><label for="size">Brush size: </label><input
+                type="text"
+                name="size"
+                id="size"
+                maxlength="3"
+                value="20" />
+            </li>
+            <li><input type="range" min="1" max="500" name="brush_slider" id="brush_slider" value="20" /></li>
+        </ul>
+        <ul class="tool-list top" data-for="eraser">
+            <li><label for="size">Brush size: </label><input
+                type="text"
+                name="size"
+                id="size"
+                maxlength="3"
+                value="20" />
+            </li>
+            <li><input type="range" min="1" max="500" name="brush_slider" id="brush_slider" value="20" /></li>
+        </ul>
+    </div>
+
     <div class="canvas-wrapper">
         <div id="bsi"></div>
         <canvas id="canvas" width="960" height="640"></canvas>
