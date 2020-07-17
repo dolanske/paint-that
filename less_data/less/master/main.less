@@ -5,11 +5,12 @@
     display: flex;
     position: absolute;
     list-style: none;
-    box-shadow: 0 16px 32px rgba(0,0,0,.2);
+    box-shadow: 0 16px 32px rgba(0,0,0,.3);
+    z-index: 50;
 
     &.left {
-        left: calc(50% - 480px - 64px);
-        top: 200px;
+        left: 2em;
+        top: calc(2em + 64px);
         width: 48px;
         flex-wrap: wrap;
         height: unset;
@@ -22,16 +23,16 @@
 
     &.top {
         .tc(.3s);
-        top: 120px;
+        top: 1.5em;
         visibility: hidden;
         opacity: 0;
-        left: calc(50% - 480px);
+        left: calc(2em + 64px);
 
         &.active {
             opacity: 1;
             z-index: 15;
             visibility: visible;
-            top: 136px;
+            top: 2em;
         }
     }
 
@@ -128,17 +129,13 @@
     }
 }
 
-label {
-    border-left: 1px solid @c4;
-}
-
 input[type=text] {
     color: @c5;
     border: none;
     width: 50px;
     text-align: center;
     background-color: @c1;
-    border-right: 1px solid @c4;
+    //border-right: 1px solid @c4;
 }
 
 input[type=range] {
@@ -174,17 +171,19 @@ input[type=range] {
 input[type=color] {
     visibility: hidden;
     position: absolute;
-    left: calc(50% - 480px - 64px);
-    top: 136px;
+    left: 2em;
+    top: 2em;
+    z-index: 50;
 
     & + label {
         position: absolute;
-        left: calc(50% - 480px - 64px);
+        left: 2em;
+        top: 2em;
         width: 48px;
         height: 48px;
+        z-index: 50;
         padding: 0;
         margin: 0;
-        top: 136px;
         border: none;
         outline: none;
         background-color: transparent;

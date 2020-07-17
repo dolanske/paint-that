@@ -39,6 +39,7 @@
             <p class="tooltip">Clear canvas</p>
         </li>
     </ul>
+
     <div class="tool-lists-top">
         <ul class="tool-list top active" data-for="brush">
             <li><label for="size">Brush size: </label><input
@@ -48,23 +49,19 @@
                 maxlength="3"
                 value="20" />
             </li>
-            <li><input type="range" min="1" max="500" name="brush_slider" id="brush_slider" value="20" /></li>
+            <li><input type="range" min="1" max="500" name="brush_slider" id="brush_slider" value="14" /></li>
+        </ul>
+        <ul class="tool-list top" data-for="fill">
+            <li>fill test</li>
         </ul>
         <ul class="tool-list top" data-for="eraser">
-            <li><label for="size">Brush size: </label><input
-                type="text"
-                name="size"
-                id="size"
-                maxlength="3"
-                value="20" />
-            </li>
-            <li><input type="range" min="1" max="500" name="brush_slider" id="brush_slider" value="20" /></li>
+            <li>eraser test</li>
         </ul>
     </div>
 
     <div class="canvas-wrapper">
         <div id="bsi"></div>
-        <canvas id="canvas" width="960" height="640"></canvas>
+        <canvas id="canvas"></canvas>
     </div>
 </body>
 

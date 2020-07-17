@@ -1,10 +1,10 @@
 // Global variables
 let brushSize = 10
-let globalDecrement = 5
-let globalIncrement = 5
-let maxBrushSize = 500
+let changeSizeBy = 2
+let maxBrushSize = 250
 let fps = 500
 let update, event, brushColor
+let toolFunction = "draw";
 
 jQuery(document).ready(function($) {
     // Get the canvas elements
@@ -14,6 +14,11 @@ jQuery(document).ready(function($) {
     let inputSize = $("#size");
     let brush_slider = $("#brush_slider");
 
+    context.canvas.width = window.innerWidth;
+    context.canvas.height = window.innerHeight;
+
+    brush_slider.attr("max", maxBrushSize)
+
     // Start the drawing event on mouse DOWN
     $(canvas).mousedown((e) => {
         update = setInterval(() => {
@@ -21,10 +26,15 @@ jQuery(document).ready(function($) {
             let x = m.x - (brushSize / 2);
             let y = m.y - (brushSize / 2);
 
-            draw(x, y, brushSize, context);
+            useTool(x, y, brushSize, context);
         }, 1000 / fps);
         return false;
     });
+
+    $("window").on("resize", function(e){
+        context.canvas.width = window.innerWidth;
+        context.canvas.height = window.innerHeight;
+    })
 
     // Release the drawing event
     $(document).mouseup(() => {
@@ -43,9 +53,9 @@ jQuery(document).ready(function($) {
     // Change brush size on mouse scroll up / down
     $(canvas).bind('DOMMouseScroll', (e) => {
         if (e.originalEvent.detail > 0) {
-            brushSizeDecrement(globalDecrement)
+            brushSizeDecrement(changeSizeBy)
         } else {
-            brushSizeIncrement(globalIncrement)
+            brushSizeIncrement(changeSizeBy)
         }
 
         // Update the brush size input
@@ -65,22 +75,21 @@ jQuery(document).ready(function($) {
         }
     })
 
-    // Resets canvas
-    $("#clear").click((e) => {
-        e.preventDefault()
+    // Tool switching
+    $(document).on("click", ".tool-list a", function(e) {
+        e.preventDefault();
 
-        context.clearRect(0, 0, canvas.width, canvas.height)
-    })
+        let id = $(this).attr("id");
 
-    // For now only sets brush color to white
-    $("#eraser").click(function(e) {
-        e.preventDefault()
-        $(this).toggleClass("active")
-
-        if ($(this).hasClass("active")) {
-            setBrushColor(255, 255, 255)
-        } else {
-            setBrushColor(0, 0, 0)
+        switch (id) {
+            case "brush":
+                toolFunction = "draw"
+                break;
+            case "clear":
+                context.clearRect(0, 0, canvas.width, canvas.height)
+                break;
+            case "eraser":
+                toolFunction = "erase";
         }
     })
 
@@ -101,6 +110,8 @@ jQuery(document).ready(function($) {
     // Switching tool lists
     $(".tool-list.left a").click(function(e) {
         e.preventDefault()
+
+        $(this).addClass("active").parent().siblings().children("a").removeClass("active");
 
         let t = $(".tool-lists-top").find("ul[data-for='" + $(this).attr("id") + "']")
         $(t).addClass("active").siblings().removeClass("active")
@@ -124,9 +135,15 @@ function getMousePos(e, element) {
     }
 }
 
-function draw(x, y, diameter, canvas) {
-    canvas.fillStyle = brushColor
-    canvas.fillRect(x, y, diameter, diameter);
+function useTool(x, y, diameter, canvas) {
+    switch (toolFunction) {
+        case "draw":
+            canvas.fillStyle = brushColor
+            canvas.fillRect(x, y, diameter, diameter)
+            break;
+        case "erase":
+            canvas.clearRect(x, y, diameter, diameter)
+    }
 }
 
 function brushSizeIncrement(increment) {
