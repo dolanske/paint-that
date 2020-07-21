@@ -1,6 +1,14 @@
 /*
     Main styles
 */
+.top-list {
+    .clearfix();
+    top: 2em;
+    left: calc(2em + 64px);
+    display: block;
+    position: absolute;
+}
+
 .tool-list {
     display: flex;
     position: absolute;
@@ -21,18 +29,26 @@
         }
     }
 
+    &.permanent,
     &.top {
         .tc(.3s);
-        top: 1.5em;
-        visibility: hidden;
-        opacity: 0;
-        left: calc(2em + 64px);
+        opacity: 1;
+        z-index: 15;
+        float: left;
+        position: relative;
+        visibility: visible;
+        margin-right: 1em;
+    }
+
+    &.top {
+        .tc(.3s);
+        display: none;
+        float: left;
+        left: unset;
+        top: unset;
 
         &.active {
-            opacity: 1;
-            z-index: 15;
-            visibility: visible;
-            top: 2em;
+            display: flex;
         }
     }
 
@@ -100,10 +116,10 @@
     display: block;
     position: absolute;
     pointer-events: none;
-    text-align: center;
-    left: -32px;
+    text-align: left;
+    left: -16px;
     height: auto;
-    right: -32px;
+    right: -48px;
     background-color: @c1;
     color: @c5;
     padding: 8px;
@@ -119,7 +135,7 @@
         content: "";
         display: block;
         position: absolute;
-        left: calc(50% - 8px);
+        left: calc(50% - 24px);
         top: 100%;
         width: 0;
         height: 0;
@@ -166,6 +182,10 @@ input[type=range] {
     pointer-events: none;
     border: 1px solid rgb(255,255,255);
     mix-blend-mode: difference;
+
+    &.cir {
+        .round(50%);
+    }
 }
 
 input[type=color] {
@@ -194,4 +214,10 @@ input[type=color] {
 ::-moz-color-swatch,
 ::-webkit-color-swatch {
     border: none;
+}
+
+.set-brush {
+    padding: 0 8px;
+    height: 24px;
+    background-color: @white;
 }

@@ -19,19 +19,19 @@
     <label for="color_input"></label>
     <ul class="tool-list left">
         <li>
-            <a href="#" id="brush"><i class="fas fa-paint-brush"></i></a>
+            <a href="#" id="brush" class="can-toggle"><i class="fas fa-paint-brush"></i></a>
             <p class="tooltip">Brush</p>
         </li>
         <li>
-            <a href="#" id="picker"><i class="fas fa-eye-dropper"></i></a>
+            <a href="#" id="picker" class="can-toggle"><i class="fas fa-eye-dropper"></i></a>
             <p class="tooltip">Color picker</p>
         </li>
         <li>
-            <a href="#" id="fill"><i class="fas fa-fill-drip"></i></a>
+            <a href="#" id="fill" class="can-toggle"><i class="fas fa-fill-drip"></i></a>
             <p class="tooltip">Fill tool</p>
         </li>
         <li>
-            <a href="#" id="eraser"><i class="fas fa-eraser"></i></a>
+            <a href="#" id="eraser" class="can-toggle"><i class="fas fa-eraser"></i></a>
             <p class="tooltip">Eraser</p>
         </li>
         <li>
@@ -40,9 +40,9 @@
         </li>
     </ul>
 
-    <div class="tool-lists-top">
-        <ul class="tool-list top active" data-for="brush">
-            <li><label for="size">Brush size: </label><input
+    <div class="top-list">
+        <ul class="tool-list permanent">
+            <li><input
                 type="text"
                 name="size"
                 id="size"
@@ -51,16 +51,24 @@
             </li>
             <li><input type="range" min="1" max="500" name="brush_slider" id="brush_slider" value="14" /></li>
         </ul>
+        <ul class="tool-list top" data-for="brush">
+            <li>
+                <a href="#" class="set-brush square active"><i class="fas fa-square-full"></i></a>
+            </li>
+            <li>
+                <a href="#" class="set-brush circle"><i class="fas fa-circle"></i></a>
+            </li>
+        </ul>
+        <ul class="tool-list top" data-for="picker">
+        </ul>
         <ul class="tool-list top" data-for="fill">
-            <li>fill test</li>
         </ul>
         <ul class="tool-list top" data-for="eraser">
-            <li>eraser test</li>
         </ul>
     </div>
 
     <div class="canvas-wrapper">
-        <div id="bsi"></div>
+        <div id="bsi" class="cir"></div>
         <canvas id="canvas"></canvas>
     </div>
 </body>

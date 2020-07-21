@@ -5,6 +5,7 @@ let maxBrushSize = 250
 let fps = 500
 let update, event, brushColor
 let toolFunction = "draw";
+let brush_type
 
 jQuery(document).ready(function($) {
     // Get the canvas elements
@@ -31,7 +32,7 @@ jQuery(document).ready(function($) {
         return false;
     });
 
-    $("window").on("resize", function(e){
+    $("window").on("resize", function(e) {
         context.canvas.width = window.innerWidth;
         context.canvas.height = window.innerHeight;
     })
@@ -84,12 +85,15 @@ jQuery(document).ready(function($) {
         switch (id) {
             case "brush":
                 toolFunction = "draw"
+                $("#bsi").addClass("cir")
                 break;
             case "clear":
                 context.clearRect(0, 0, canvas.width, canvas.height)
                 break;
             case "eraser":
                 toolFunction = "erase";
+                $("#bsi").removeClass("cir")
+                break;
         }
     })
 
@@ -108,12 +112,12 @@ jQuery(document).ready(function($) {
     })
 
     // Switching tool lists
-    $(".tool-list.left a").click(function(e) {
+    $(".tool-list.left a.can-toggle").click(function(e) {
         e.preventDefault()
 
         $(this).addClass("active").parent().siblings().children("a").removeClass("active");
 
-        let t = $(".tool-lists-top").find("ul[data-for='" + $(this).attr("id") + "']")
+        let t = $(".top-list").find("ul[data-for='" + $(this).attr("id") + "']")
         $(t).addClass("active").siblings().removeClass("active")
     })
 
@@ -126,6 +130,26 @@ jQuery(document).ready(function($) {
             backgroundColor: c,
         })
     })
+
+    $(".set-brush").click(function(e) {
+        e.preventDefault()
+
+        // Get the second class name - which is the brush name
+        let c = $(this).attr('class').split(' ')[1]
+
+        // Change the brush indicator
+        if (c === "circle") {
+            $("#bsi").addClass("cir")
+        } else {
+            $("#bsi").removeClass("cir")
+        }
+
+        // Active item
+        $(this).addClass("active").parent().siblings().children().removeClass("active")
+
+        // Set the new brush type
+        setBrushType(c)
+    })
 })
 
 function getMousePos(e, element) {
@@ -135,11 +159,21 @@ function getMousePos(e, element) {
     }
 }
 
+function setBrushType(type) {
+    brush_type = type;
+}
+
 function useTool(x, y, diameter, canvas) {
+    let brush = new Path2D();
+
     switch (toolFunction) {
         case "draw":
+            // Set the color
             canvas.fillStyle = brushColor
-            canvas.fillRect(x, y, diameter, diameter)
+
+            // Set the brush
+            brush.arc(x + diameter / 2, y + diameter / 2, diameter / 2, 0, 2 * Math.PI);
+            brush_type === "circle" ? canvas.fill(brush) : canvas.fillRect(x, y, diameter, diameter)
             break;
         case "erase":
             canvas.clearRect(x, y, diameter, diameter)
